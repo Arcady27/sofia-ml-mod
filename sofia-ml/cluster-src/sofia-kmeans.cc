@@ -67,7 +67,7 @@ void CommandLine(int argc, char** argv) {
 	  "   Threshold to use in RBF mapping. Values smaller than this will be set to zero.",
 	  float(0.0));	
   AddFlag("--cluster_mapping_sparsity",
-	  "   The number of nearest clusters to use in mapping. Default is 0, or all. Works only with RBF mapping.",
+	  "   The number of nearest clusters to use in mapping. Default is 0, or all. ",
 	  int(0));		  
   AddFlag("--random_seed",
           "When set to non-zero value, use this seed instead of seed \n"
