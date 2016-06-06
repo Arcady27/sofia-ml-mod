@@ -46,11 +46,15 @@ int element_compare( void const *a, void  const *b ) {
 }
 */
 
-int element_compare( element c, element d ) {
+int element_compare_desc( element c, element d ) {
 	//printf ("1st: %d/%f, 2nd: %d/%f\n", c.index, c.value, d.index, d.value );
 	return ( c.value > d.value );
 }
 
+int element_compare_asc( element c, element d ) {
+	//printf ("1st: %d/%f, 2nd: %d/%f\n", c.index, c.value, d.index, d.value );
+	return ( c.value < d.value );
+}
 // ---
 
 SfClusterCenters::SfClusterCenters(int dimensionality)
@@ -179,7 +183,7 @@ SfSparseVector* SfClusterCenters::MapVectorToCenters(
       std::cerr << "ClusterCenterMappingType " << type << "not supported.";
       exit(1);
     }
-    if ( s > 0 and type != SQUARED_DISTANCE ) {
+    if ( s > 0 ) {
 	    distances[i - 1].index = i;
 	    distances[i - 1].value = d;
 	    element_distances[i - 1] = d;
@@ -189,7 +193,7 @@ SfSparseVector* SfClusterCenters::MapVectorToCenters(
   }
   
   	// select s closest clusters
-  	if ( s > 0 and type != SQUARED_DISTANCE ) {
+  	if ( s > 0 ) {
   
 		for ( unsigned int n = 0; n < 10; n++ ) {
 			//printf ("index: %d, value: %f\n", distances[n].index, distances[n].value );
@@ -197,8 +201,11 @@ SfSparseVector* SfClusterCenters::MapVectorToCenters(
 		//printf ("\n\n");
 
 		//qsort( distances, num_clusters, sizeof( element ), element_compare );
-		std::sort( distances, distances + num_clusters, &element_compare );
-
+		if (type == RBF_KERNEL)
+			std::sort( distances, distances + num_clusters, &element_compare_desc );
+		else
+			std::sort( distances, distances + num_clusters, &element_compare_asc );
+			
 		for ( unsigned int n = 0; n < 10; n++ ) {
 			//printf ("index: %d, value: %f\n", distances[n].index, distances[n].value );
 		}  
@@ -207,7 +214,7 @@ SfSparseVector* SfClusterCenters::MapVectorToCenters(
 		// compute ranks 0...n-1  
 		for ( unsigned int n = 0; n < num_clusters; n++ ) {
 			int index = distances[n].index;
-			float value = distances[n].value;
+			//float value = distances[n].value;
 			element_ranks[index - 1] = n;
 			//printf( "%d / %f - rank %d\n", index, value, n );
 		}  
