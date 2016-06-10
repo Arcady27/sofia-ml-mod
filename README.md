@@ -1,7 +1,7 @@
 sofia-ml, modified
 ==================
 
-This is an updated version of [sofia-ml](http://code.google.com/p/sofia-ml/) modification by D. Sculley made by A. Dushatskiy. It differs from the original sofia-ml only in two additional parameters for sofia-kmeans RBF and standard Euclidian distance cluster mapping (modification for RFB is made by D. Sculley and for Euclidian distance by A. Dushatskiy):
+This is an updated version of sofia-ml modification (http://fastml.com/the-secret-of-the-big-guys/) (original version is [sofia-ml](http://code.google.com/p/sofia-ml/). It differs from the original sofia-ml only in two additional parameters for sofia-kmeans RBF and standard Euclidian distance cluster mapping (modification for Euclidian distance made by A. Dushatskiy):
 
 `--cluster_mapping_threshold <float t>`
 
